@@ -42,6 +42,7 @@ jobs:
         - sudo gem install --no-document fpm
         - export GOFLAGS=-mod=vendor
       script:
+        - echo $PWD
         - export GOPATH=$HOME/go
         - mkdir -p $HOME/cloudcore/cloudcore_folder
         - cp $HOME/bitvijays/kubeedge/build/tools/certgen.sh $HOME/cloudcore/cloudcore_folder/
