@@ -29,15 +29,6 @@ install: true
 
 jobs:
   include:
-    - stage: "Verify vendor, codegen, gofmt, golint, govet"
-      name: "Verify vendor, codegen, gofmt, golint, govet"
-      before_script:
-        - curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | BINARY=golangci-lint sh -s -- -d -b $(go env GOPATH)/bin v1.22.2
-        - export GO111MODULE=on
-      script:
-        - make verify
-        - make lint
-
     - stage: "Test on amd64"
       name: "build, smallbuild, crossbuild"
       arch: amd64
@@ -48,7 +39,7 @@ jobs:
         - sudo apt-get install gcc-arm-linux-gnueabi -y
         - sudo apt-get install libc6-dev-armel-cross -y
         - sudo apt-get install ruby ruby-dev rubygems build-essential
-        - sudo gem install --no-documet fpm
+        - sudo gem install --no-document fpm
         - export GOFLAGS=-mod=vendor
       script:
         - make
