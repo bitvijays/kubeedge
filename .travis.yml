@@ -44,6 +44,7 @@ jobs:
       script:
         - echo $PWD
         - mkdir -p $HOME/cloudcore/cloudcore_folder
+        - mkdir -p $HOME/edgecore/edgecore_folder
         - cp $GOPATH/src/github.com/bitvijays/kubeedge/build/tools/certgen.sh $HOME/cloudcore/cloudcore_folder/
         - cp $GOPATH/src/github.com/bitvijays/kubeedge/build/crds/devices/* $HOME/cloudcore/cloudcore_folder/.
         - cp $GOPATH/src/github.com/bitvijays/kubeedge/build/crds/reliablesyncs/* $HOME/cloudcore/cloudcore_folder/.
