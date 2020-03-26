@@ -43,7 +43,6 @@ jobs:
         - export GOFLAGS=-mod=vendor
       script:
         - echo $PWD
-        - export GOPATH=$HOME/go
         - mkdir -p $HOME/cloudcore/cloudcore_folder
         - cp $GOPATH/src/github.com/bitvijays/kubeedge/build/tools/certgen.sh $HOME/cloudcore/cloudcore_folder/
         - cp $GOPATH/src/github.com/bitvijays/kubeedge/build/crds/devices/* $HOME/cloudcore/cloudcore_folder/.
