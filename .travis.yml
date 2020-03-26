@@ -74,10 +74,11 @@ jobs:
 
       deploy:
         provider: releases
-        api_key: "5b8f7aca3468be7a00fa55ebf598689c031721c0"
+        api_key:
+          secure: "SI1K1fBjfP6I2KbLdadt2WwAqwAuBneJ9+MMfaiWoknO52fkegfRmtw6TE2ESxobFBaFxRAAxopv1vfdWI5MODhgycAuZwzjNZoONUtIOA6oc/44O/VqE+9FdKNg2Q4U9qeiWz3TUn2/MZ+shD0WsqnvtLLOgjKuP22UGzd6qVTpeJBsViGhJ0K1YhBCRdnWz5MHTSp+TcCJocp73meNwsz08BfDMxA+iRnBE0WVwXI+dtmWd9ot2kKXvrvQgNWzf94sNAQ3gjYQid1u7LRf8FVJvRD442TaJvN18k/oYKPWPcsgcYJgcp/bEEivMpnKI4L49BhvbGExXn96MPmql+o4vxBJadAIMW19OZyKfi9pDfO8L7oQ1wfgmMMdQWryEYwOkkgKKYc8Wrvtr6jTgTYKfhve7oghnTnJolzhKYKA3hon+8wSnLDdOcklfBvSq7D//LyYZQtTxZn5KGIQXgoRvHwiWpRj8tvHLHxuXOQAgn8pUOm7Lj9RYWzMn+Vjk4CS+enyCJXcUfzATd6w+RoiTmNAG/rZJkkJJJfFBQTynfm/n/5O9sVHan/Ccy4UB2NZcWBPfISuSwgxxwF0MyUDUHstftr8NRt+eMHfbn8MPlHv79Bpo8PI53XTMUoNa63cR3IUfThdhcY00RckVcRxAVARbA9jlHZD+bCs5+w=
         file:
-          - "FILE 1"
-          - "FILE 2"
+          - "cloudcore_1.2_amd64.deb"
+          - "edgecore_1.2_amd64.deb"
         skip_cleanup: true
         on:
            branch: travis-packages
