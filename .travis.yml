@@ -55,7 +55,7 @@ jobs:
         - echo "mkdir -p  /etc/kubeedge/config/" >> $HOME/cloudcore/cloudcore_folder/post_install.sh
         - echo "/opt/kubeedge/cloudcore/cloudcore --minconfig > /etc/kubeedge/config/cloudcore.yaml" >> $HOME/cloudcore/cloudcore_folder/post_install.sh
         - make
-        - cp $GOPATH/src/bitvijays/kubeedge/_output/local/bin/cloudcore $HOME/cloudcore/cloudcore
+        - cp $GOPATH/src/github.com/bitvijays/kubeedge/_output/local/bin/cloudcore $HOME/cloudcore/cloudcore
         - fpm -s dir -t deb -v 1.2 -n cloudcore --after-install=$HOME/cloudcore/cloudcore_folder/post_install.sh $HOME/cloudcore/cloudcore_folder/=/etc/kubeedge/files $HOME/cloudcore/cloudcore=/opt/kubeedge/cloudcore/cloudcore
         - make smallbuild 
         - make crossbuild
