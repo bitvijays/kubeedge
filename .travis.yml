@@ -75,7 +75,7 @@ jobs:
       deploy:
         provider: releases
         api_key:
-          secure: "SI1K1fBjfP6I2KbLdadt2WwAqwAuBneJ9+MMfaiWoknO52fkegfRmtw6TE2ESxobFBaFxRAAxopv1vfdWI5MODhgycAuZwzjNZoONUtIOA6oc/44O/VqE+9FdKNg2Q4U9qeiWz3TUn2/MZ+shD0WsqnvtLLOgjKuP22UGzd6qVTpeJBsViGhJ0K1YhBCRdnWz5MHTSp+TcCJocp73meNwsz08BfDMxA+iRnBE0WVwXI+dtmWd9ot2kKXvrvQgNWzf94sNAQ3gjYQid1u7LRf8FVJvRD442TaJvN18k/oYKPWPcsgcYJgcp/bEEivMpnKI4L49BhvbGExXn96MPmql+o4vxBJadAIMW19OZyKfi9pDfO8L7oQ1wfgmMMdQWryEYwOkkgKKYc8Wrvtr6jTgTYKfhve7oghnTnJolzhKYKA3hon+8wSnLDdOcklfBvSq7D//LyYZQtTxZn5KGIQXgoRvHwiWpRj8tvHLHxuXOQAgn8pUOm7Lj9RYWzMn+Vjk4CS+enyCJXcUfzATd6w+RoiTmNAG/rZJkkJJJfFBQTynfm/n/5O9sVHan/Ccy4UB2NZcWBPfISuSwgxxwF0MyUDUHstftr8NRt+eMHfbn8MPlHv79Bpo8PI53XTMUoNa63cR3IUfThdhcY00RckVcRxAVARbA9jlHZD+bCs5+w="
+          secure: "FM0JXdQ1l1imsH2XdDhvKZdA2wdDNi45/fuEzCoRa5UUtqhUKOx+qG88pqkTK4rVSUfUu524OlfLfix4G36DuQFDGdO2WeLwr/L4aPUR5hqykFIbR/Cj/Eb0Vl7Jekq+eN9vBPpfkFqpBAdBjbD8zELosIrCt8QHNpjap/XfBm7p0DrLH5u0L8cB5dz2OHsrOvMtU9zjdDcRxozkPNz4wjSAvLRqfOS2+DoG/jZSYkoSiPtaP/7nRmpfpzk6z07KsxfTfTsgHy44+YOj5HLcMXAHgZqDsACPiDooyLx+AnSNa3ACno1oU3aOZHjvrti15vvhx4k6Kjf9KgXb8/Mbx75GDL2R+boSMo3Dn7JsBTPuDjWvtPKp/JxzzUqBdjhBqNW07W7ZOY6ZRzGl+VVk/ykgs/g7gasKmGwMLMlE6flI/WhPXW6v6j9Y94918/kZeXlo1mLu5v+5/HcTNoqn0FS//tYegOlcY4XEtDiRUFvByRbdZdttoY7L8pBpk8JGZEvsOBtburD36Ike18pAVgvdp1Y5VQLhnQIy26C/VLqWV1ot5kcZt2JWSYkrLoy2q1guiv9X6zcj9+SsM9AnvtuKKTb7Hi+wTg0fix066bV6JPU6ZQ3/tWLKjhKPdF4Z95vEBRwW3GfW9J/ya2mj7k1ahr2vLG7zBZXNKuqCbs8="
         file:
           - "cloudcore_1.2_amd64.deb"
           - "edgecore_1.2_amd64.deb"
