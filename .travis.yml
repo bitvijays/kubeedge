@@ -44,9 +44,9 @@ jobs:
       script:
         - export GOPATH=$HOME/go
         - mkdir -p $HOME/cloudcore/cloudcore_folder
-        - cp $GOPATH/src/github.com/kubeedge/kubeedge/build/tools/certgen.sh $HOME/cloudcore/cloudcore_folder/
-        - cp $GOPATH/src/github.com/kubeedge/kubeedge/build/crds/devices/* $HOME/cloudcore/cloudcore_folder/.
-        - cp $GOPATH/src/github.com/kubeedge/kubeedge/build/crds/reliablesyncs/* $HOME/cloudcore/cloudcore_folder/.
+        - cp $HOME/kubeedge/kubeedge/build/tools/certgen.sh $HOME/cloudcore/cloudcore_folder/
+        - cp $HOME/kubeedge/kubeedge/build/crds/devices/* $HOME/cloudcore/cloudcore_folder/.
+        - cp $HOME/kubeedge/kubeedge/build/crds/reliablesyncs/* $HOME/cloudcore/cloudcore_folder/.
         - echo "/etc/kubeedge/files/certgen.sh genCertAndKey edge" >> $HOME/cloudcore/cloudcore_folder/post_install.sh
         - echo "kubectl create -f devices_v1alpha1_devicemodel.yaml" >> $HOME/cloudcore/cloudcore_folder/post_install.sh
         - echo "kubectl create -f devices_v1alpha1_device.yaml" >> $HOME/cloudcore/cloudcore_folder/post_install.sh
@@ -55,9 +55,8 @@ jobs:
         - echo "mkdir -p  /etc/kubeedge/config/" >> $HOME/cloudcore/cloudcore_folder/post_install.sh
         - echo "/opt/kubeedge/cloudcore/cloudcore --minconfig > /etc/kubeedge/config/cloudcore.yaml" >> $HOME/cloudcore/cloudcore_folder/post_install.sh
         - make
-        - cp $GOPATH/src/github.com/kubeedge/kubeedge/_output/local/bin/cloudcore $HOME/cloudcore/cloudcore
+        - cp $HOME/kubeedge/kubeedge/_output/local/bin/cloudcore $HOME/cloudcore/cloudcore
         - fpm -s dir -t deb -v 1.2 -n cloudcore --after-install=$HOME/cloudcore/cloudcore_folder/post_install.sh $HOME/cloudcore/cloudcore_folder/=/etc/kubeedge/files $HOME/cloudcore/cloudcore=/opt/kubeedge/cloudcore/cloudcore
-        - make bluetoothdevice
         - make smallbuild 
         - make crossbuild
         - make crossbuild GOARM=GOARM7
