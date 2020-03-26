@@ -80,4 +80,4 @@ jobs:
           - "FILE 2"
         skip_cleanup: true
         on:
-        tags: true
+           branch: travis-packages
