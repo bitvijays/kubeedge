@@ -1,84 +1,81 @@
 language: go
-
 branches:
-    only:
-        - travis-packages
-
+  only:
+  - travis-packages
 git:
   depth: false
-
 sudo: required
-
 dist: bionic
-
 services:
-  - docker
-
+- docker
 go:
-  - 1.13
-
+- 1.13
 before_install:
-  - |
-      if ! git diff --name-only $TRAVIS_COMMIT_RANGE | grep -qvE '(\.md)|(\.png)|(\.pdf)|(\.html)|^(LICENSE)|^(docs)'
-      then
-        echo "Only doc files were updated, skip running the CI."
-        travis_terminate 0
-      fi
-
+- |
+  if ! git diff --name-only $TRAVIS_COMMIT_RANGE | grep -qvE '(\.md)|(\.png)|(\.pdf)|(\.html)|^(LICENSE)|^(docs)'
+  then
+    echo "Only doc files were updated, skip running the CI."
+    travis_terminate 0
+  fi
 install: true
-
 jobs:
   include:
-    - stage: "Test on amd64"
-      name: "build, smallbuild, crossbuild"
-      arch: amd64
-      before_script:
-        - sudo apt-get install upx-ucl -y
-        - sudo apt-get install gcc-aarch64-linux-gnu -y
-        - sudo apt-get install libc6-dev-arm64-cross -y
-        - sudo apt-get install gcc-arm-linux-gnueabi -y
-        - sudo apt-get install libc6-dev-armel-cross -y
-        - sudo apt-get install ruby ruby-dev rubygems build-essential
-        - sudo gem install --no-document fpm
-        - export GOFLAGS=-mod=vendor
-      script:
-        - echo $PWD
-        - mkdir -p $HOME/cloudcore/cloudcore_folder
-        - mkdir -p $HOME/edgecore/edgecore_folder
-        - cp $GOPATH/src/github.com/bitvijays/kubeedge/build/tools/certgen.sh $HOME/cloudcore/cloudcore_folder/
-        - cp $GOPATH/src/github.com/bitvijays/kubeedge/build/crds/devices/* $HOME/cloudcore/cloudcore_folder/.
-        - cp $GOPATH/src/github.com/bitvijays/kubeedge/build/crds/reliablesyncs/* $HOME/cloudcore/cloudcore_folder/.
-        - echo "/etc/kubeedge/files/certgen.sh genCertAndKey edge" >> $HOME/cloudcore/cloudcore_folder/post_install.sh
-        - echo "kubectl create -f devices_v1alpha1_devicemodel.yaml" >> $HOME/cloudcore/cloudcore_folder/post_install.sh
-        - echo "kubectl create -f devices_v1alpha1_device.yaml" >> $HOME/cloudcore/cloudcore_folder/post_install.sh
-        - echo "kubectl create -f cluster_objectsync_v1alpha1.yaml" >> $HOME/cloudcore/cloudcore_folder/post_install.sh
-        - echo "kubectl create -f objectsync_v1alpha1.yaml" >> $HOME/cloudcore/cloudcore_folder/post_install.sh
-        - echo "mkdir -p  /etc/kubeedge/config/" >> $HOME/cloudcore/cloudcore_folder/post_install.sh
-        - echo "/opt/kubeedge/cloudcore/cloudcore --minconfig > /etc/kubeedge/config/cloudcore.yaml" >> $HOME/cloudcore/cloudcore_folder/post_install.sh
-        - echo "mkdir -p  /etc/kubeedge/config/" >> $HOME/edgecore/edgecore_folder/post_install.sh
-        - echo "/opt/kubeedge/edgecore/edgecore --minconfig > /etc/kubeedge/config/edgecore.yaml" >> $HOME/edgecore/edgecore_folder/post_install.sh
-        - make
-        - cp $GOPATH/src/github.com/bitvijays/kubeedge/_output/local/bin/cloudcore $HOME/cloudcore/cloudcore
-        - cp $GOPATH/src/github.com/bitvijays/kubeedge/_output/local/bin/edgecore $HOME/edgecore/edgecore
-        - fpm -s dir -t deb -v 1.2 -n cloudcore --after-install=$HOME/cloudcore/cloudcore_folder/post_install.sh $HOME/cloudcore/cloudcore_folder/=/etc/kubeedge/files $HOME/cloudcore/cloudcore=/opt/kubeedge/cloudcore/cloudcore
-        - fpm -s dir -t deb -v 1.2 -n edgecore --after-install=$HOME/edgecore/edgecore_folder/post_install.sh $HOME/edgecore/edgecore_folder/=/etc/kubeedge/files $HOME/edgecore/edgecore=/opt/kubeedge/edgecore/edgecore
-        - make smallbuild 
-        - make crossbuild
-        - cp $GOPATH/src/github.com/bitvijays/kubeedge/_output/local/bin/edgecore $HOME/edgecore/edgecore
-        - fpm -s dir -t deb -v 1.2 -n edgecore -a aarch64 --after-install=$HOME/edgecore/edgecore_folder/post_install.sh $HOME/edgecore/edgecore_folder/=/etc/kubeedge/files $HOME/edgecore/edgecore=/opt/kubeedge/edgecore/edgecore
-        - make crossbuild GOARM=GOARM7
-        - cp $GOPATH/src/github.com/bitvijays/kubeedge/_output/local/bin/edgecore $HOME/edgecore/edgecore
-        - fpm -s dir -t deb -v 1.2 -n edgecore -a armv7l --after-install=$HOME/edgecore/edgecore_folder/post_install.sh $HOME/edgecore/edgecore_folder/=/etc/kubeedge/files $HOME/edgecore/edgecore=/opt/kubeedge/edgecore/edgecore
-        - pwd
-        - ls
+  - stage: Test on amd64
+    name: build, smallbuild, crossbuild
+    arch: amd64
+    before_script:
+    - sudo apt-get install upx-ucl -y
+    - sudo apt-get install gcc-aarch64-linux-gnu -y
+    - sudo apt-get install libc6-dev-arm64-cross -y
+    - sudo apt-get install gcc-arm-linux-gnueabi -y
+    - sudo apt-get install libc6-dev-armel-cross -y
+    - sudo apt-get install ruby ruby-dev rubygems build-essential
+    - sudo gem install --no-document fpm
+    - export GOFLAGS=-mod=vendor
+    script:
+    - echo $PWD
+    - mkdir -p $HOME/cloudcore/cloudcore_folder
+    - mkdir -p $HOME/edgecore/edgecore_folder
+    - cp $GOPATH/src/github.com/bitvijays/kubeedge/build/tools/certgen.sh $HOME/cloudcore/cloudcore_folder/
+    - cp $GOPATH/src/github.com/bitvijays/kubeedge/build/crds/devices/* $HOME/cloudcore/cloudcore_folder/.
+    - cp $GOPATH/src/github.com/bitvijays/kubeedge/build/crds/reliablesyncs/* $HOME/cloudcore/cloudcore_folder/.
+    - echo "/etc/kubeedge/files/certgen.sh genCertAndKey edge" >> $HOME/cloudcore/cloudcore_folder/post_install.sh
+    - echo "kubectl create -f devices_v1alpha1_devicemodel.yaml" >> $HOME/cloudcore/cloudcore_folder/post_install.sh
+    - echo "kubectl create -f devices_v1alpha1_device.yaml" >> $HOME/cloudcore/cloudcore_folder/post_install.sh
+    - echo "kubectl create -f cluster_objectsync_v1alpha1.yaml" >> $HOME/cloudcore/cloudcore_folder/post_install.sh
+    - echo "kubectl create -f objectsync_v1alpha1.yaml" >> $HOME/cloudcore/cloudcore_folder/post_install.sh
+    - echo "mkdir -p  /etc/kubeedge/config/" >> $HOME/cloudcore/cloudcore_folder/post_install.sh
+    - echo "/opt/kubeedge/cloudcore/cloudcore --minconfig > /etc/kubeedge/config/cloudcore.yaml"
+      >> $HOME/cloudcore/cloudcore_folder/post_install.sh
+    - echo "mkdir -p  /etc/kubeedge/config/" >> $HOME/edgecore/edgecore_folder/post_install.sh
+    - echo "/opt/kubeedge/edgecore/edgecore --minconfig > /etc/kubeedge/config/edgecore.yaml"
+      >> $HOME/edgecore/edgecore_folder/post_install.sh
+    - make
+    - cp $GOPATH/src/github.com/bitvijays/kubeedge/_output/local/bin/cloudcore $HOME/cloudcore/cloudcore
+    - cp $GOPATH/src/github.com/bitvijays/kubeedge/_output/local/bin/edgecore $HOME/edgecore/edgecore
+    - fpm -s dir -t deb -v 1.2 -n cloudcore --after-install=$HOME/cloudcore/cloudcore_folder/post_install.sh
+      $HOME/cloudcore/cloudcore_folder/=/etc/kubeedge/files $HOME/cloudcore/cloudcore=/opt/kubeedge/cloudcore/cloudcore
+    - fpm -s dir -t deb -v 1.2 -n edgecore --after-install=$HOME/edgecore/edgecore_folder/post_install.sh
+      $HOME/edgecore/edgecore_folder/=/etc/kubeedge/files $HOME/edgecore/edgecore=/opt/kubeedge/edgecore/edgecore
+    - make smallbuild
+    - make crossbuild
+    - cp $GOPATH/src/github.com/bitvijays/kubeedge/_output/local/bin/edgecore $HOME/edgecore/edgecore
+    - fpm -s dir -t deb -v 1.2 -n edgecore -a aarch64 --after-install=$HOME/edgecore/edgecore_folder/post_install.sh
+      $HOME/edgecore/edgecore_folder/=/etc/kubeedge/files $HOME/edgecore/edgecore=/opt/kubeedge/edgecore/edgecore
+    - make crossbuild GOARM=GOARM7
+    - cp $GOPATH/src/github.com/bitvijays/kubeedge/_output/local/bin/edgecore $HOME/edgecore/edgecore
+    - fpm -s dir -t deb -v 1.2 -n edgecore -a armv7l --after-install=$HOME/edgecore/edgecore_folder/post_install.sh
+      $HOME/edgecore/edgecore_folder/=/etc/kubeedge/files $HOME/edgecore/edgecore=/opt/kubeedge/edgecore/edgecore
+    - pwd
+    - ls
 
-      deploy:
-        provider: releases
-        api_key:
-          secure: "FM0JXdQ1l1imsH2XdDhvKZdA2wdDNi45/fuEzCoRa5UUtqhUKOx+qG88pqkTK4rVSUfUu524OlfLfix4G36DuQFDGdO2WeLwr/L4aPUR5hqykFIbR/Cj/Eb0Vl7Jekq+eN9vBPpfkFqpBAdBjbD8zELosIrCt8QHNpjap/XfBm7p0DrLH5u0L8cB5dz2OHsrOvMtU9zjdDcRxozkPNz4wjSAvLRqfOS2+DoG/jZSYkoSiPtaP/7nRmpfpzk6z07KsxfTfTsgHy44+YOj5HLcMXAHgZqDsACPiDooyLx+AnSNa3ACno1oU3aOZHjvrti15vvhx4k6Kjf9KgXb8/Mbx75GDL2R+boSMo3Dn7JsBTPuDjWvtPKp/JxzzUqBdjhBqNW07W7ZOY6ZRzGl+VVk/ykgs/g7gasKmGwMLMlE6flI/WhPXW6v6j9Y94918/kZeXlo1mLu5v+5/HcTNoqn0FS//tYegOlcY4XEtDiRUFvByRbdZdttoY7L8pBpk8JGZEvsOBtburD36Ike18pAVgvdp1Y5VQLhnQIy26C/VLqWV1ot5kcZt2JWSYkrLoy2q1guiv9X6zcj9+SsM9AnvtuKKTb7Hi+wTg0fix066bV6JPU6ZQ3/tWLKjhKPdF4Z95vEBRwW3GfW9J/ya2mj7k1ahr2vLG7zBZXNKuqCbs8="
-        file:
-          - "cloudcore_1.2_amd64.deb"
-          - "edgecore_1.2_amd64.deb"
-        skip_cleanup: true
-        on:
-           branch: travis-packages
+deploy:
+  provider: releases
+  api_key:
+    secure: DgjgRvwBR+JtmYETSQ/7OTv1SKBYJ+wF6j9kaUY60LAE1aSLB5maDafwo6ZL1701TT37/qsAf060x2aj9VW0krGKxJqZiWYlZYO3JMRF6teW7w6FSES05NnzPj/LKccpG48+DnPps2lQiQah6wQYxyw1Vr/kCmQqteHvRB+x8KsS+nUj5ro08gWoOzVtqh+gjG1juJiPtifQPngKeWpnADGzskhTOyLC2QWTeoZ1w2Zcx6LhXnBXi8ZmmqgI5jgrT/3c5o8uXRRgSYH0BpQ1N1Zd6vR6hw/kg4Wh2dIuBzhIgGtAdfQnp+Ka8KoijDxFKiJ4KjwMpgnQyzK50DxbE0jdJk80In7rBdXgEsq8rRFH6Y9iAbRUbdWSBl3eCq5QYWZpQRcxrybCo1HkjDIlY7NkmAh8SNoqFCg5Shk7rQrIpv4QYY2Th0MvQVMtMszAmtwWsHH/l7007y+4Hm7dIAGTpcVqNr4y+2xRDclUPTVBUmBqsfnv1PUuc2hA5bjpCxpa7TDHz1YzImF24ERKC4NR1tMStBG7EWG9/aajJbqMtQmd9Z7GbFSXnJ8EwvcNVfz6ucc3fP05n51x/IKD2AEVi8aOm6+YxdFCLop5km2NVqlY0YX/HQ/0Fxn95dYr5WuEeyrNUW8fuL+eFDjD8RB/Fl3wudw5FLBrz+vKklI=
+  file:
+    - cloudcore_1.2_amd64.deb
+    - edgecore_1.2_amd64.deb
+  on:
+    repo: bitvijays/kubeedge
+    branch: travis-packages
