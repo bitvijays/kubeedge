@@ -69,3 +69,15 @@ jobs:
         - make crossbuild GOARM=GOARM7
         - cp $GOPATH/src/github.com/bitvijays/kubeedge/_output/local/bin/edgecore $HOME/edgecore/edgecore
         - fpm -s dir -t deb -v 1.2 -n edgecore -a armv7l --after-install=$HOME/edgecore/edgecore_folder/post_install.sh $HOME/edgecore/edgecore_folder/=/etc/kubeedge/files $HOME/edgecore/edgecore=/opt/kubeedge/edgecore/edgecore
+        - pwd
+        - ls
+
+      deploy:
+        provider: releases
+        api_key: "5b8f7aca3468be7a00fa55ebf598689c031721c0"
+        file:
+          - "FILE 1"
+          - "FILE 2"
+        skip_cleanup: true
+        on:
+        tags: true
