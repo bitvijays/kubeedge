@@ -72,9 +72,11 @@ deploy:
   provider: releases
   api_key:
     secure: mmJoCX7ioo14zTLrmaJVRAlyrljgMwmrqW0WUmT34c2IkbnCvnVY4q2NRbzk067WTm1lP8omRjqGulFzyspb2U1AoaDe/75GWCtHbJuPV3fNQ6GwWUGQH+Buf2m73MgMa5tsTIrW5y2neg5NJTJ0uZ1Fh83hEH4Y4BVyXoN2fA+Ddg/cPcisxjYggOyfQ6LUEvoqIVoRYntWoCEyprlt/LiZW37CpIWexnYSEZi4W/FNb3QryLi+/DooEsXMbo5Tn9KJ75KvFWe3xgw3yU0DVQuXs4tvVD+MTTfU/Bj+a5OsEyLS1v/+s9m7UFlB2khx9CQYex7Vx/l7OqmJLvde+cZ0JBz7g4lojlv/bP5vFE8b8kViszA5l5I5xD6IfMxIiP1dS7sDO/FPryI0fJR6VmL/K37S+uKgGp3VZ68haNW6uDLIJY9LzvW0/IcIY7dErET2D+gkJRV1r0ETl6rZG0RRHgkvmhkWL2EPqJnbstJ9jDK+WKNJSWE4TIT/QRMq0mjoAuIRkH1Mo0T8IqZFu4ARMjEoSOfNBvOndHPzmyjtherHJP5rLe8Y7KPRj99HqKpGbhf0fLjdee04a2z16sJCq1tcOfFe8GFJgZArTIY6Axhqim1JVx1iIEOjp8H+KVzIJPcSUC0L5jAD3FIpZl88vgT69nabXqK3FdQZsXM=
+  skip_cleanup: true
   file:
     - cloudcore_1.2_amd64.deb
     - edgecore_1.2_amd64.deb
   on:
     repo: bitvijays/kubeedge
     branch: travis-packages
+
