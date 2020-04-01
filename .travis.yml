@@ -20,7 +20,7 @@ before_install:
 install: true
 jobs:
   include:
-  - stage: Test on amd64
+  - stage: Test on amd64 and build Debian Packages for arm64, aarch64 and armv7l
     name: build, smallbuild, crossbuild
     arch: amd64
     before_script:
@@ -72,7 +72,7 @@ jobs:
     - make crossbuild GOARM=GOARM7
 # Copying edgecore for armv7 and building package for the same
     - cp $GOPATH/src/github.com/bitvijays/kubeedge/_output/local/bin/edgecore $HOME/edgecore/edgecore
-    - fpm -s dir -t deb -v 1.2 -n edgecore -a armv7l --after-install=$HOME/edgecore/edgecore_folder/post_install.sh
+    - fpm -s dir -t deb -v 1.2 -n kubeedge-edgecore -a armv7l --after-install=$HOME/edgecore/edgecore_folder/post_install.sh
       $HOME/edgecore/edgecore_folder/=/etc/kubeedge/files $HOME/edgecore/edgecore=/usr/local/kubeedge/edgecore
     - pwd
     - ls
